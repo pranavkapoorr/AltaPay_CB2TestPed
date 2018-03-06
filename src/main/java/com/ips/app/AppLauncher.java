@@ -2,7 +2,7 @@ package com.ips.app;
 
 import java.net.InetSocketAddress;
 
-import com.ips.actors.TcpServerActor;
+import com.ips.actors.tcp.TcpServerActor;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
