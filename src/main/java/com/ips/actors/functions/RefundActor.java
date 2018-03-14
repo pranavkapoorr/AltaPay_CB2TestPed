@@ -46,7 +46,7 @@ public class RefundActor extends AbstractActor{
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0A00000476073******0004ICC018425000000000010611049",false), getSelf());
                         TimeUnit.SECONDS.sleep(1);
-                        getSender().tell(new Protocol37Wrapper(terminalId+"000000710U000000021476073GRXGSHLTP0004||0000000000",false), getSelf());
+                        getSender().tell(new Protocol37Wrapper(terminalId+"0U000000021476073GRXGSHLTP0004||0000000000",false), getSelf());
                         if(RouterActor.printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S         Elavon              Visa Chip DCC               REFUND               Point Elavon           Elavon - Demo                              Merch",false), getSelf());
