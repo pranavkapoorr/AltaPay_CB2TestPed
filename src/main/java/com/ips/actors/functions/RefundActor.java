@@ -21,17 +21,17 @@ public class RefundActor extends AbstractActor{
     
     @Override
     public void preStart() throws Exception {
-        log.trace("REFUND ACTOR STARTED");
+        log.trace(getSelf().path().name()+" REFUND ACTOR STARTED");
     }
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(String.class, s->{
                     if(s.contains("0A00")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+ s);
                        // terminalId = s.substring(0,8);
                     }else{
-                        log.info(s);
+                        log.info(getSelf().path().name()+ s);
                         getSender().tell(new Protocol37Wrapper("INSERT CARD   ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper("AUTH IN PROGRESS ",true), getSelf());
@@ -73,7 +73,7 @@ public class RefundActor extends AbstractActor{
     }
     @Override
     public void postStop() throws Exception {
-       log.trace("REFUND ACTOR STOPPED");
+       log.trace(getSelf().path().name()+" REFUND ACTOR STOPPED");
     }
 
 }

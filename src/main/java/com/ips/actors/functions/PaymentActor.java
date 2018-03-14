@@ -21,17 +21,17 @@ public class PaymentActor extends AbstractActor{
     
     @Override
     public void preStart() throws Exception {
-        log.trace("PAYMENT ACTOR STARTED");
+        log.trace(getSelf().path().name()+" PAYMENT ACTOR STARTED");
     }
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(String.class, s->{
                     if(s.contains("0P00")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+ s);
                         //terminalId = s.substring(0,8);
                     }else{
-                        log.info(s);
+                        log.info(getSelf().path().name()+ s);
                         getSender().tell(new Protocol37Wrapper("INSERT CARD   ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper("ENTER PIN AND CONF.",true), getSelf());
@@ -65,7 +65,7 @@ public class PaymentActor extends AbstractActor{
     }
     @Override
     public void postStop() throws Exception {
-        log.trace("PAYMENT ACTOR STOPPED");
+        log.trace(getSelf().path().name()+" PAYMENT ACTOR STOPPED");
     }
 
 }

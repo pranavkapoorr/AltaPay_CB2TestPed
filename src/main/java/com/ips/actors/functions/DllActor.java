@@ -21,7 +21,7 @@ public class DllActor  extends AbstractActor{
     }
    @Override
     public void preStart() throws Exception {
-        log.trace("DLL ACTOR STARTED");
+        log.trace(getSelf().path().name()+" DLL ACTOR STARTED");
     } 
    
     @Override
@@ -53,7 +53,7 @@ public class DllActor  extends AbstractActor{
     }
     @Override
         public void postStop() throws Exception {
-           log.trace("DLL ACTOR STOPPED");
+           log.trace(getSelf().path().name()+" DLL ACTOR STOPPED");
         }
 
 }

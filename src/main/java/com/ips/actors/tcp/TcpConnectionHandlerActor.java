@@ -20,18 +20,20 @@ import akka.util.ByteString;
 public class TcpConnectionHandlerActor extends AbstractActor {
 private ActorRef sender;
 private ActorRef router;
+private int counter = 0;
 private final static Logger log = LogManager.getLogger(TcpConnectionHandlerActor.class); 
-	public TcpConnectionHandlerActor() {
+	public TcpConnectionHandlerActor(int counter) {
+		this.counter = counter;
 	}
 
-	public static Props props() {
-		return Props.create(TcpConnectionHandlerActor.class);
+	public static Props props(int counter) {
+		return Props.create(TcpConnectionHandlerActor.class, counter);
 	}
 	
 	@Override
 	public void preStart() {
-	    log.trace("started handler");
-		router = getContext().actorOf(RouterActor.props());
+	    log.trace(getSelf().path()+" started handler");
+		router = getContext().actorOf(RouterActor.props(counter),"router-"+counter);
 	}
 
 	@Override
@@ -40,22 +42,23 @@ private final static Logger log = LogManager.getLogger(TcpConnectionHandlerActor
 				.match(Received.class, msg->{
 				    sender = getSender();
 					String messageX = msg.data().utf8String();
-					 log.trace("received-> "+messageX);
+					 log.trace(getSelf().path().name()+" received-> "+messageX);
 					 router.tell(messageX, getSelf());
 					
 				}).match(String.class, s->{
-                    log.info("sent-> "+s);
+                    log.info(getSelf().path().name()+" sent-> "+s);
                     sender.tell(TcpMessage.write(ByteString.fromString(s)), getSelf());
                 })
 				.match(Protocol37Wrapper.class, p->{
-				    log.info("sent-> "+p.getMessage());
+				    log.info(getSelf().path().name()+" sent-> "+p.getMessage());
 				    sender.tell(TcpMessage.write(ByteString.fromString(p.getMessage())), getSelf());
 				})
 				.match(ConnectionClosed.class, closed->{
-				    log.trace("connection closed");
+				    log.trace(getSelf().path().name()+" connection closed");
 					getContext().stop(getSelf());
 				})
 				.match(CommandFailed.class, conn->{
+					log.trace(getSelf().path().name()+" connection failed");
 					getContext().stop(getSelf());
 				})
 				.build();
@@ -63,7 +66,7 @@ private final static Logger log = LogManager.getLogger(TcpConnectionHandlerActor
 	
 	@Override
 	public void postStop() {
-	    log.trace("stopped handler");
+	    log.trace(getSelf().path().name()+" stopped handler");
 	}
 	
 }

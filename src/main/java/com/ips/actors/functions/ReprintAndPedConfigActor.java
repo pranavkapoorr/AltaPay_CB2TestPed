@@ -19,14 +19,14 @@ public class ReprintAndPedConfigActor extends AbstractActor{
     }
     @Override
     public void preStart() throws Exception {
-       log.trace("REPRINT ACTOR STARTED");
+       log.trace(getSelf().path().name()+" REPRINT ACTOR STARTED");
     }
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(String.class, s->{
                     if(s.equals("000000000R100")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+s);
                         //terminalId = s.substring(0,8);
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0S          Visa               Visa Electron              PURCHASE           Bishops Stortford        Stanstead House                             Merch",false), getSelf());
@@ -40,7 +40,7 @@ public class ReprintAndPedConfigActor extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper(terminalId+"0S    TRANSACTION APPROVED                                 THANK YOU                                      PIN VERIFIED      }}",false), getSelf());
                         getContext().getSystem().stop(getContext().getParent());
                     }else if(s.equals("000000000s")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+s);
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0s000000000002031810259SYS40.42MAN84.21EMV173V0ECR10.63SSL01.47EXT05.37EDL04.90P/NIPP350                        S/N11245PP70614902",false), getSelf());
                         getContext().getSystem().stop(getContext().getParent());
@@ -52,6 +52,6 @@ public class ReprintAndPedConfigActor extends AbstractActor{
     }
     @Override
     public void postStop() throws Exception {
-        log.trace("REPRINT ACTOR STOPPED");
+        log.trace(getSelf().path().name()+" REPRINT ACTOR STOPPED");
     }
 }

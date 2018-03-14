@@ -16,6 +16,7 @@ import akka.io.Tcp.Connected;
 public class TcpServerActor  extends AbstractActor {
 	final ActorRef manager;
 	private final static Logger log = LogManager.getLogger(TcpServerActor.class); 
+	private static  int connectionCount = 0; 
 	 private TcpServerActor(ActorRef manager,InetSocketAddress serverAddress) {
 	        this.manager = manager;
 	        	manager.tell(TcpMessage.bind(getSelf(),serverAddress,100), getSelf());
@@ -40,8 +41,10 @@ public class TcpServerActor  extends AbstractActor {
 	      
 	      })
 	      .match(Connected.class, conn -> {
-	          log.trace(conn.toString());
-	    	  final ActorRef handler = getContext().actorOf(TcpConnectionHandlerActor.props());
+	    	  connectionCount ++;
+	    	  log.trace(conn.toString());
+	          
+	    	  final ActorRef handler = getContext().actorOf(TcpConnectionHandlerActor.props(connectionCount),"TCP-handler-"+ connectionCount);
 	                /**
 	                 * !!NB:
 	                 * telling the aforesaid akka internal connection actor that the actor "handler"

@@ -20,14 +20,14 @@ public class ReversalActor extends AbstractActor{
     }
     @Override
     public void preStart() throws Exception {
-        log.trace("REVERSAL ACTOR STARTED");
+        log.trace(getSelf().path().name()+" REVERSAL ACTOR STARTED");
     }
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(String.class, s->{
                     if(s.contains("0S00")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+s);
                         //terminalId = s.substring(0,8);
                     }else{
                         getSender().tell(new Protocol37Wrapper("INSERT CARD   ",true), getSelf());
@@ -61,6 +61,6 @@ public class ReversalActor extends AbstractActor{
     }
     @Override
     public void postStop() throws Exception {
-        log.trace("REVERSAL ACTOR STOPPED");
+        log.trace(getSelf().path().name()+" REVERSAL ACTOR STOPPED");
     }
 }

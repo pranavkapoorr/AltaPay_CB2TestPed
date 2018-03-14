@@ -20,14 +20,18 @@ public class RouterActor extends AbstractActor{
     private ActorRef commmunication;
     public static boolean printOption;
     private ActorRef sender;
-    private final static Logger log = LogManager.getLogger(RouterActor.class); 
-    public static Props props(){
-        return Props.create(RouterActor.class);
+    private int counter = 0;
+    private final static Logger log = LogManager.getLogger(RouterActor.class);
+    public RouterActor(int counter) {
+		this.counter = counter;
+	}
+    public static Props props(int counter){
+        return Props.create(RouterActor.class,counter);
     }
     
     @Override
     public void preStart() throws Exception {
-        log.trace("ROUTER STARTED");
+        log.trace(getSelf().path().name()+" ROUTER STARTED");
         printOption = false;
     }
     @Override
@@ -44,36 +48,36 @@ public class RouterActor extends AbstractActor{
                             printOption = true;
                         }
                         else if(messageX.contains("0P0")){
-                            commmunication = getContext().actorOf(PaymentActor.props());
+                            commmunication = getContext().actorOf(PaymentActor.props(),"payment-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0A0")){
-                            commmunication = getContext().actorOf(RefundActor.props());
+                            commmunication = getContext().actorOf(RefundActor.props(),"refund-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0S0")){
-                            commmunication = getContext().actorOf(ReversalActor.props());
+                            commmunication = getContext().actorOf(ReversalActor.props(),"reversal-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0U0")){
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0D0")){
-                            commmunication = getContext().actorOf(DllActor.props());
+                            commmunication = getContext().actorOf(DllActor.props(),"dll-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0T0")||messageX.contains("0C0")){
-                            commmunication = getContext().actorOf(ReportActor.props());
+                            commmunication = getContext().actorOf(ReportActor.props(),"report-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("00s")||messageX.contains("00R100")){
-                            commmunication = getContext().actorOf(ReprintAndPedConfigActor.props());
+                            commmunication = getContext().actorOf(ReprintAndPedConfigActor.props(),"reprint-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         
                         
                     }else if(messageX.equals(ACK())){
-                        log.info("ack");   
+                        //log.info(getSelf().path().name()+" ack");   
                      }
                     else{
                         sender.tell(NACK(), getSelf());
@@ -92,7 +96,7 @@ public class RouterActor extends AbstractActor{
     }
     @Override
     public void postStop() throws Exception {
-       log.trace("ROUTER STOPPED");
+       log.trace(getSelf().path().name()+" ROUTER STOPPED");
     }
 
 }

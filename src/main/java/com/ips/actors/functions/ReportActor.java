@@ -22,7 +22,7 @@ public class ReportActor extends AbstractActor{
     
     @Override
     public void preStart() throws Exception {
-        log.trace("REPORT ACTOR STARTED");
+        log.trace(getSelf().path().name()+" REPORT ACTOR STARTED");
     }
     @Override
     public Receive createReceive() {
@@ -30,7 +30,7 @@ public class ReportActor extends AbstractActor{
                 .match(String.class, s->{
                     
                     if(s.contains("0C00")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+ s);
                       //  terminalId = s.substring(0,8);
                         getSender().tell(new Protocol37Wrapper("OPERATION IN PROGRESS   ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
@@ -49,7 +49,7 @@ public class ReportActor extends AbstractActor{
                         }
                         getContext().getSystem().stop(getContext().getParent());
                     }else if(s.contains("0T00")){
-                        log.info(s);
+                        log.info(getSelf().path().name()+s);
                         //terminalId = s.substring(0,8);
                         getSender().tell(new Protocol37Wrapper("OPERATION IN PROGRESS   ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
@@ -74,7 +74,7 @@ public class ReportActor extends AbstractActor{
     }
     @Override
     public void postStop() throws Exception {
-        log.trace("REPORT ACTOR STOPPED");
+        log.trace(getSelf().path().name()+" REPORT ACTOR STOPPED");
     }
 
 }
