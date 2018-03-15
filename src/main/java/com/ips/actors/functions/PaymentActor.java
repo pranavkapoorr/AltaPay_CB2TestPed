@@ -15,8 +15,12 @@ import akka.actor.Props;
 public class PaymentActor extends AbstractActor{
     private String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(PaymentActor.class); 
-    public static Props props(){
-        return Props.create(PaymentActor.class);
+    private boolean printOption;
+    public PaymentActor(boolean printOption) {
+       this.printOption = printOption;
+    }
+    public static Props props(boolean printOption){
+        return Props.create(PaymentActor.class, printOption);
     }
     
     @Override
@@ -43,7 +47,7 @@ public class PaymentActor extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper(terminalId+"0E00000476173******0010ICC1614090571613210000000301000009000034000",false), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0U000000147476173JPDLNRZTD0010|0eiI2xZ3HOWqCYlYVSkJGgkPqwcmp0jUiQyo19YlGQhgiaf1xHXaZIzUMgnrgf0VF/YMJkl0XXwLy40c88tQrA==+1|d5949370-acb9-25e0-8010-640190a4ed770000000000",false), getSelf());
-                        if(RouterActor.printOption){
+                        if(printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S          Visa               Visa Electron              PURCHASE           Bishops Stortford        Stanstead House                             Merch",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);

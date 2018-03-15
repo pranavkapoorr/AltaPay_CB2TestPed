@@ -5,19 +5,20 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ips.actors.router.RouterActor;
 import com.ips.resources.Protocol37Wrapper;
 
 import akka.actor.AbstractActor;
-import akka.actor.PoisonPill;
 import akka.actor.Props;
 
 public class ReportActor extends AbstractActor{
     private String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(ReportActor.class); 
-
-    public static Props props(){
-        return Props.create(ReportActor.class);
+    private boolean printOption;
+    public ReportActor(boolean printOption) {
+       this.printOption = printOption;
+    }
+    public static Props props(boolean printOption){
+        return Props.create(ReportActor.class, printOption);
     }
     
     @Override
@@ -39,7 +40,7 @@ public class ReportActor extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper("TRANSACTION COMPLETE  ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0C0000000000000000000000000000000000500",false), getSelf());
-                        if(RouterActor.printOption){
+                        if(printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S       END OF DAY             Point Elavon           Elavon - Demo                              TML             00000071Date 02/03/18 Time 10:33STAN ",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
@@ -47,6 +48,7 @@ public class ReportActor extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S           0.00                          OPERATION SUCCEEDED   }}",false), getSelf());
                         }
+                        TimeUnit.MILLISECONDS.sleep(1000);
                         getContext().getSystem().stop(getContext().getParent());
                     }else if(s.contains("0T00")){
                         log.info(getSelf().path().name()+s);
@@ -58,7 +60,7 @@ public class ReportActor extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper("TRANSACTION COMPLETE  ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0T000000000000000000500000000",false), getSelf());
-                        if(RouterActor.printOption){
+                        if(printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S      HOST BALANCE            Point Elavon           Elavon - Demo                              TML             00000071Date 02/03/18 Time 10:32STAN ",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
@@ -66,6 +68,7 @@ public class ReportActor extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S           0.00                          OPERATION SUCCEEDED   }}",false), getSelf());
                         }
+                        TimeUnit.MILLISECONDS.sleep(1000);
                         getContext().getSystem().stop(getContext().getParent());
                     }
                     

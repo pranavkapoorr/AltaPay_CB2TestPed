@@ -15,8 +15,12 @@ import akka.actor.Props;
 public class RefundActor extends AbstractActor{
     private String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(RefundActor.class); 
-    public static Props props(){
-        return Props.create(RefundActor.class);
+    private boolean printOption;
+    public RefundActor(boolean printOption) {
+       this.printOption = printOption;
+    }
+    public static Props props(boolean printOption){
+        return Props.create(RefundActor.class, printOption);
     }
     
     @Override
@@ -47,7 +51,7 @@ public class RefundActor extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper(terminalId+"0A00000476073******0004ICC018425000000000010611049",false), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0U000000021476073GRXGSHLTP0004||0000000000",false), getSelf());
-                        if(RouterActor.printOption){
+                        if(printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S         Elavon              Visa Chip DCC               REFUND               Point Elavon           Elavon - Demo                              Merch",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);

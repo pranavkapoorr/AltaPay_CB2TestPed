@@ -15,8 +15,12 @@ import akka.actor.Props;
 public class ReversalActor extends AbstractActor{
     private String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(ReversalActor.class); 
-    public static Props props(){
-        return Props.create(ReversalActor.class);
+    private boolean printOption;
+    public ReversalActor(boolean printOption) {
+       this.printOption = printOption;
+    }
+    public static Props props(boolean printOption){
+        return Props.create(ReversalActor.class, printOption);
     }
     @Override
     public void preStart() throws Exception {
@@ -41,7 +45,7 @@ public class ReversalActor extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper(terminalId+"0E00000476073******0004ICC00000006110452000000000010000090000330000000000000",false), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0U000000021476073GRXGSHLTP0004||0000000000",false), getSelf());
-                        if(RouterActor.printOption){
+                        if(printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S         Elavon              Visa Chip DCC         PURCHASE REVERSAL          Point Elavon           Elavon - Demo                              Merch",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);

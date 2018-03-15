@@ -18,7 +18,7 @@ import akka.actor.Props;
 
 public class RouterActor extends AbstractActor{
     private ActorRef commmunication;
-    public static boolean printOption;
+    private static volatile boolean printOption;
     private ActorRef sender;
     private int counter = 0;
     private final static Logger log = LogManager.getLogger(RouterActor.class);
@@ -46,28 +46,29 @@ public class RouterActor extends AbstractActor{
                         messageX = messageX.substring(1,messageX.length()-2);
                         if(messageX.contains("0E1")){
                             printOption = true;
+                            log.trace(getSelf().path().name()+" setting print option true");
                         }
                         else if(messageX.contains("0P0")){
-                            commmunication = getContext().actorOf(PaymentActor.props(),"payment-"+counter);
+                            commmunication = getContext().actorOf(PaymentActor.props(printOption),"payment-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0A0")){
-                            commmunication = getContext().actorOf(RefundActor.props(),"refund-"+counter);
+                            commmunication = getContext().actorOf(RefundActor.props(printOption),"refund-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0S0")){
-                            commmunication = getContext().actorOf(ReversalActor.props(),"reversal-"+counter);
+                            commmunication = getContext().actorOf(ReversalActor.props(printOption),"reversal-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0U0")){
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0D0")){
-                            commmunication = getContext().actorOf(DllActor.props(),"dll-"+counter);
+                            commmunication = getContext().actorOf(DllActor.props(printOption),"dll-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("0T0")||messageX.contains("0C0")){
-                            commmunication = getContext().actorOf(ReportActor.props(),"report-"+counter);
+                            commmunication = getContext().actorOf(ReportActor.props(printOption),"report-"+counter);
                             commmunication.tell(messageX, getSelf());
                         }
                         else if(messageX.contains("00s")||messageX.contains("00R100")){

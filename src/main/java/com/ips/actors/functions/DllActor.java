@@ -15,10 +15,13 @@ import akka.actor.Props;
 public class DllActor  extends AbstractActor{
    private String terminalId = "00000000";
    private final static Logger log = LogManager.getLogger(DllActor.class); 
-   
-   public static Props props(){
-        return Props.create(DllActor.class);
-    }
+   private boolean printOption;
+   public DllActor(boolean printOption) {
+      this.printOption = printOption;
+   }
+   public static Props props(boolean printOption){
+       return Props.create(DllActor.class, printOption);
+   }
    @Override
     public void preStart() throws Exception {
         log.trace(getSelf().path().name()+" DLL ACTOR STARTED");
@@ -37,7 +40,7 @@ public class DllActor  extends AbstractActor{
                         getSender().tell(new Protocol37Wrapper("TRANSACTION COMPLETE  ",true), getSelf());
                         TimeUnit.SECONDS.sleep(1);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0D0000000200002306110300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",false), getSelf());
-                        if(RouterActor.printOption){
+                        if(printOption){
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S     DLL PARAMETERS           Point Elavon           Elavon - Demo                              Date 02/03/18 Time 10:30TML 00000071 STAN 000002CAUSA",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
