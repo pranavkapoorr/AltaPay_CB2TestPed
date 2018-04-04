@@ -53,7 +53,7 @@ public class ReversalActor extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S                                     LOCAL AMOUNT:                           GBP 0.10EXCHANGE RATE:             1 GBP = 12.683821 HKD      Final Amoun",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
-                            getSender().tell(new Protocol37Wrapper(terminalId+"0St              HKD 1.27                                  TRANSACTION APPROVED  }}",false), getSelf());
+                            getSender().tell(new Protocol37Wrapper(terminalId+"0St              HKD 1.27                                  TRANSACTION APPROVED  }}"+ (char)27,false), getSelf());
                         }
                         TimeUnit.SECONDS.sleep(3);
                         getSender().tell(new Protocol37Wrapper("CARD REMOVED   ",true), getSelf());

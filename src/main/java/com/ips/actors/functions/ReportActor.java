@@ -46,7 +46,7 @@ public class ReportActor extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S000004                                     POS BALANCE             GBP                 0.00                        BANK BALANCE            GBP      ",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
-                            getSender().tell(new Protocol37Wrapper(terminalId+"0S           0.00                          OPERATION SUCCEEDED   }}",false), getSelf());
+                            getSender().tell(new Protocol37Wrapper(terminalId+"0S           0.00                          OPERATION SUCCEEDED   }}"+ (char)27,false), getSelf());
                         }
                         TimeUnit.MILLISECONDS.sleep(1000);
                         getContext().getSystem().stop(getContext().getParent());
@@ -66,7 +66,7 @@ public class ReportActor extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0S000003                                     POS BALANCE             GBP                 0.00                        BANK BALANCE            GBP      ",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
-                            getSender().tell(new Protocol37Wrapper(terminalId+"0S           0.00                          OPERATION SUCCEEDED   }}",false), getSelf());
+                            getSender().tell(new Protocol37Wrapper(terminalId+"0S           0.00                          OPERATION SUCCEEDED   }}"+ (char)27,false), getSelf());
                         }
                         TimeUnit.MILLISECONDS.sleep(1000);
                         getContext().getSystem().stop(getContext().getParent());

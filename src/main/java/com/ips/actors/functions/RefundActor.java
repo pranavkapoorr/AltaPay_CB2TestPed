@@ -65,7 +65,7 @@ public class RefundActor extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0Svon Best Rate at   www.elavon.eu/bestrate.                                                   TRANSACTION APPROVED                                 THAN",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
-                            getSender().tell(new Protocol37Wrapper(terminalId+"0SK YOU        }}",false), getSelf());
+                            getSender().tell(new Protocol37Wrapper(terminalId+"0SK YOU        }}"+ (char)27,false), getSelf());
                         }
                         TimeUnit.SECONDS.sleep(3);
                         getSender().tell(new Protocol37Wrapper("CARD REMOVED   ",true), getSelf());

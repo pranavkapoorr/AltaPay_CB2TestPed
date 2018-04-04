@@ -37,7 +37,7 @@ public class ReprintAndPedConfigActor extends AbstractActor{
                         TimeUnit.MILLISECONDS.sleep(120);
                         getSender().tell(new Protocol37Wrapper(terminalId+"0S0008000T.C.    F854F8E111BB9867IAD       06010A03600000PAN SEQ.N             01                        AMOUNT  GBP         0.10                      ",false), getSelf());
                         TimeUnit.MILLISECONDS.sleep(120);
-                        getSender().tell(new Protocol37Wrapper(terminalId+"0S    TRANSACTION APPROVED                                 THANK YOU                                      PIN VERIFIED      }}",false), getSelf());
+                        getSender().tell(new Protocol37Wrapper(terminalId+"0S    TRANSACTION APPROVED                                 THANK YOU                                      PIN VERIFIED      }}"+ (char)27,false), getSelf());
                         getContext().getSystem().stop(getContext().getParent());
                     }else if(s.equals("000000000s")){
                         log.info(getSelf().path().name()+s);

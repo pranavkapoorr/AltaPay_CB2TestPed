@@ -46,7 +46,7 @@ public class DllActor  extends AbstractActor{
                             TimeUnit.MILLISECONDS.sleep(120);
                             getSender().tell(new Protocol37Wrapper(terminalId+"0SL  861 N.OP. 000022Conferment   PAR.TEC  OK                             CARDS HANDLED      Elavon                                            OPERATION",false), getSelf());
                             TimeUnit.MILLISECONDS.sleep(120);
-                            getSender().tell(new Protocol37Wrapper(terminalId+"0S SUCCEEDED   }}",false), getSelf());
+                            getSender().tell(new Protocol37Wrapper(terminalId+"0S SUCCEEDED   }}"+ (char)27,false), getSelf());
                         }
                         getContext().getSystem().stop(getContext().getParent());
                     }
