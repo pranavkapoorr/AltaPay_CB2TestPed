@@ -3,9 +3,7 @@ package com.ips.app;
 import java.net.InetSocketAddress;
 
 import com.ips.actors.tcp.TcpServerActor;
-
-import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
+import akka.actor.*;
 import akka.io.Tcp;
 
 public class AppLauncher {

@@ -1,20 +1,9 @@
 package com.ips.actors.router;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.ips.actors.functions.DllActor;
-import com.ips.actors.functions.PaymentActor;
-import com.ips.actors.functions.RefundActor;
-import com.ips.actors.functions.ReportActor;
-import com.ips.actors.functions.ReprintAndPedConfigActor;
-import com.ips.actors.functions.ReversalActor;
+import org.apache.logging.log4j.*;
+import com.ips.actors.functions.*;
 import com.ips.resources.Protocol37Wrapper;
-
-import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import akka.actor.PoisonPill;
-import akka.actor.Props;
+import akka.actor.*;
 
 public class RouterActor extends AbstractActor{
     private ActorRef commmunication;

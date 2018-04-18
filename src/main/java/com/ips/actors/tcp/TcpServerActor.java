@@ -2,16 +2,10 @@ package com.ips.actors.tcp;
 
 import java.net.InetSocketAddress;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import akka.actor.Props;
+import org.apache.logging.log4j.*;
+import akka.actor.*;
 import akka.io.TcpMessage;
-import akka.io.Tcp.Bound;
-import akka.io.Tcp.CommandFailed;
-import akka.io.Tcp.Connected;
+import akka.io.Tcp.*;
 
 public class TcpServerActor  extends AbstractActor {
 	final ActorRef manager;

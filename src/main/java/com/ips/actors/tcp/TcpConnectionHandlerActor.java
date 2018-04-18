@@ -1,18 +1,11 @@
 package com.ips.actors.tcp;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import org.apache.logging.log4j.*;
 import com.ips.actors.router.RouterActor;
 import com.ips.resources.Protocol37Wrapper;
-
-import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import akka.actor.Props;
-import akka.io.Tcp.CommandFailed;
-import akka.io.Tcp.ConnectionClosed;
-import akka.io.Tcp.Received;
+import akka.actor.*;
+import akka.io.Tcp.*;
 import akka.io.TcpMessage;
 import akka.util.ByteString;
 

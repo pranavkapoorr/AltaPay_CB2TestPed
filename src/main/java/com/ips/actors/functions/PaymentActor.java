@@ -1,16 +1,9 @@
 package com.ips.actors.functions;
 
 import java.util.concurrent.TimeUnit;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.ips.actors.router.RouterActor;
+import org.apache.logging.log4j.*;
 import com.ips.resources.Protocol37Wrapper;
-
-import akka.actor.AbstractActor;
-import akka.actor.PoisonPill;
-import akka.actor.Props;
+import akka.actor.*;
 
 public class PaymentActor extends AbstractActor{
     private String terminalId = "00000000";
