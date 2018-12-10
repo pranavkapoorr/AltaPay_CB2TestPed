@@ -9,9 +9,9 @@ import akka.io.Tcp;
 public class AppLauncher {
     public static void main(String[] args){
         if(isValidIP(args[0]) && isValidPort(args[1])){
-            ActorSystem system= ActorSystem.create("testPed");
-            ActorRef tcpMnager =Tcp.get(system).manager();
-            ActorRef tcpServer= system.actorOf(TcpServerActor.props(tcpMnager ,new InetSocketAddress(args[0], Integer.parseInt(args[1]))),"SERVER");
+            ActorSystem system = ActorSystem.create("testPed");
+            ActorRef tcpMnager = Tcp.get(system).manager();
+            system.actorOf(TcpServerActor.props(tcpMnager ,new InetSocketAddress(args[0], Integer.parseInt(args[1]))),"SERVER");
         }else{
             System.err.println("Check the Server address properly..!!");
         }

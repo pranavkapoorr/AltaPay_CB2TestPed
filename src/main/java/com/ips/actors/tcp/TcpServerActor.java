@@ -8,7 +8,7 @@ import akka.io.TcpMessage;
 import akka.io.Tcp.*;
 
 public class TcpServerActor  extends AbstractActor {
-	final ActorRef manager;
+	private final ActorRef manager;
 	private final static Logger log = LogManager.getLogger(TcpServerActor.class); 
 	private static  int connectionCount = 0; 
 	 private TcpServerActor(ActorRef manager,InetSocketAddress serverAddress) {

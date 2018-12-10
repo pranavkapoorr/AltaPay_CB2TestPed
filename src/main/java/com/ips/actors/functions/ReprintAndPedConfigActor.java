@@ -7,7 +7,7 @@ import com.ips.resources.Protocol37Wrapper;
 import akka.actor.*;
 
 public class ReprintAndPedConfigActor extends AbstractActor{
-    private String terminalId = "00000000";
+    private final String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(ReprintAndPedConfigActor.class); 
     public static Props props(){
         return Props.create(ReprintAndPedConfigActor.class);

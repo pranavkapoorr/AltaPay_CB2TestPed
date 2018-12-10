@@ -7,9 +7,9 @@ import com.ips.resources.Protocol37Wrapper;
 import akka.actor.*;
 
 public class ReversalActor extends AbstractActor{
-    private String terminalId = "00000000";
+    private final String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(ReversalActor.class); 
-    private boolean printOption;
+    private final boolean printOption;
     public ReversalActor(boolean printOption) {
        this.printOption = printOption;
     }

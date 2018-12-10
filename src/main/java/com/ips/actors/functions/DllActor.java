@@ -6,9 +6,9 @@ import com.ips.resources.Protocol37Wrapper;
 import akka.actor.*;
 
 public class DllActor  extends AbstractActor{
-   private String terminalId = "00000000";
+   private final String terminalId = "00000000";
    private final static Logger log = LogManager.getLogger(DllActor.class); 
-   private boolean printOption;
+   private final boolean printOption;
    public DllActor(boolean printOption) {
       this.printOption = printOption;
    }
@@ -25,7 +25,6 @@ public class DllActor  extends AbstractActor{
         return receiveBuilder()
                 .match(String.class, s->{
                     if(s.contains("0D00")){
-                        terminalId = s.substring(0,8);
                         getSender().tell(new Protocol37Wrapper("OPERATION IN PROGRESS   ",true), getSelf());
                         TimeUnit.SECONDS.sleep(10);
                         getSender().tell(new Protocol37Wrapper("AUTH IN PROGRESS ",true), getSelf());

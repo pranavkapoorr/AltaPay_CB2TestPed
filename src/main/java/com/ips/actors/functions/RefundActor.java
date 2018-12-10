@@ -6,9 +6,9 @@ import com.ips.resources.Protocol37Wrapper;
 import akka.actor.*;
 
 public class RefundActor extends AbstractActor{
-    private String terminalId = "00000000";
+    private final String terminalId = "00000000";
     private final static Logger log = LogManager.getLogger(RefundActor.class); 
-    private boolean printOption;
+    private final boolean printOption;
     public RefundActor(boolean printOption) {
        this.printOption = printOption;
     }
